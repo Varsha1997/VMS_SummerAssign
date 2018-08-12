@@ -1,0 +1,158 @@
+﻿@model IPagedList<VMS_SummerAssign.Models.Volunteer>
+@using PagedList;
+@using PagedList.Mvc;
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+@{
+    ViewBag.Title = "Search";
+}
+
+
+<head>
+
+    <br />
+
+    <div class="w3-container">
+        <center>
+            <div class="w3-panel w3-border w3-round-small">
+                <br />
+
+                @using (Html.BeginForm("Search", "Search", FormMethod.Get))
+                {
+                    <b>Search Option: </b>@Html.RadioButton("option", "FName")<text> First Name </text>@Html.RadioButton("option", "LName")<text> Last Name </text>
+                     @Html.TextBox("search")<input type="submit" name="submit" value="Find" class="btn btn-default" />
+                }
+                <br />
+            </div>
+        </center>
+    </div>
+    @{
+        if (ViewBag.SearchKey != null)
+        {
+            <span>
+                Search Key: @ViewBag.SearchKey
+            </span>
+        }
+    }
+    <br />
+    <p>
+        @Html.ActionLink("Go Back", "Index","Volunteer")
+    </p>
+</head>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().FName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().LName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Centers)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Skills)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().AvailabilityTimes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().HomeAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Education)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Licenses)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().EmergContactName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().EmergContactPhone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().EmergContactAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().DriversLicense)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().SocialSecurity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().VolApprovStat)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Centers)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Skills)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AvailabilityTimes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HomeAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Education)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Licenses)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmergContactName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmergContactPhone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmergContactAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DriversLicense)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SocialSecurity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VolApprovStat)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    </tr>
+    }
+
+</table>
