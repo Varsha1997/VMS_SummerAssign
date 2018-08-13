@@ -28,30 +28,6 @@ namespace VMS_SummerAssign.Controllers
             return View();
         }
 
-        // Post the info
-        [HttpPost]
-        public ActionResult Add(VolunteerModel vmodel)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    VolunteerDBhandle sdb = new VolunteerDBhandle();
-                    if (sdb.AddVolunteer(vmodel))
-                    {
-                        ViewBag.Message = "Volunteer Details Added Successfully";
-                        ModelState.Clear();
-                        return RedirectToAction("Index");
-                    }
-                }
-                return View();
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
 
         public ActionResult Register()
         {
