@@ -1,0 +1,72 @@
+@model IEnumerable<VMS_SummerAssign.Models.Opportunity>
+
+@{
+    ViewBag.Title = "OpportunityFilter";
+}
+
+<h2>OpportunityFilter</h2>
+
+<p>
+    @using (Html.BeginForm("OpportunityFilter", "Filter", FormMethod.Get))
+    {
+        <text>Centers</text>@Html.DropDownList("oCenter", new SelectList(ViewBag.oCenter))
+        <input type="submit" value="Filter" />
+    }
+</p>
+
+<p>
+    @Html.ActionLink("Go Back", "Index", "Opportunity")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OCenter)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OPhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OSeason)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OActivity)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OCenter)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OPhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OSeason)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OActivity)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
