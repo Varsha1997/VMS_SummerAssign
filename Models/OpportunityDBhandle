@@ -1,0 +1,126 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
+
+namespace VMS_SummerAssign.Models
+{
+    public class OpportunityDBhandle
+    {
+        private SqlConnection con;
+        private void connection()
+        {
+            string constring = ConfigurationManager.ConnectionStrings["volunteerconn"].ToString();
+            con = new SqlConnection(constring);
+        }
+
+            // **************** ADD NEW VOLUNTEER *********************
+            public bool AddOpportunity(OpportunityModel omodel)
+            {
+                connection();
+                SqlCommand cmd = new SqlCommand("InsertOpportunity", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@OName", omodel.OName);
+                cmd.Parameters.AddWithValue("@OCenter", omodel.OCenter);
+                cmd.Parameters.AddWithValue("@OPhoneNumber", omodel.OPhoneNumber);
+                cmd.Parameters.AddWithValue("@OEmail", omodel.OEmail);
+                cmd.Parameters.AddWithValue("@OSeason", omodel.OSeason);
+                cmd.Parameters.AddWithValue("@OActivity", omodel.OActivity);
+                cmd.Parameters.AddWithValue("@ODate", omodel.ODate);
+
+
+
+            con.Open();
+                int i = cmd.ExecuteNonQuery();
+                con.Close();
+
+                if (i >= 1)
+                    return true;
+                else
+                    return false;
+            }
+
+            // ********** VIEW VOLUNTEER DETAILS ********************
+            public List<OpportunityModel> GetOpportunity()
+            {
+                connection();
+                List<OpportunityModel> opportunitylist = new List<OpportunityModel>();
+
+                SqlCommand cmd = new SqlCommand("GetOpportunity", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter sd = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+
+                con.Open();
+                sd.Fill(dt);
+                con.Close();
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    opportunitylist.Add(
+                        new OpportunityModel
+                        {
+                            Id = Convert.ToInt32(dr["Id"]),
+                            OName = Convert.ToString(dr["OName"]),
+                            OCenter = Convert.ToString(dr["OCenter"]),
+                            OPhoneNumber = Convert.ToString(dr["OPhoneNumber"]),
+                            OEmail = Convert.ToString(dr["OEmail"]),
+                            OSeason = Convert.ToString(dr["OSeason"]),
+                            OActivity = Convert.ToString(dr["OActivity"]),
+                            ODate = Convert.ToDateTime(dr["ODate"].ToString())
+
+                        });
+                }
+                return opportunitylist;
+            }
+
+            // ***************** UPDATE STUDENT DETAILS *********************
+            public bool UpdateDetails(OpportunityModel omodel)
+            {
+                connection();
+                SqlCommand cmd = new SqlCommand("UpdateOpportunityDetails", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@OppId", omodel.Id);
+                cmd.Parameters.AddWithValue("@OName", omodel.OName);
+                cmd.Parameters.AddWithValue("@OCenter", omodel.OCenter);
+                cmd.Parameters.AddWithValue("@OPhoneNumber", omodel.OPhoneNumber);
+                cmd.Parameters.AddWithValue("@OEmail", omodel.OEmail);
+                cmd.Parameters.AddWithValue("@OSeason", omodel.OSeason);
+                cmd.Parameters.AddWithValue("@OActivity", omodel.OActivity);
+                cmd.Parameters.AddWithValue("@ODate", omodel.ODate);
+
+
+
+            con.Open();
+                int i = cmd.ExecuteNonQuery();
+                con.Close();
+
+                if (i >= 1)
+                    return true;
+                else
+                    return false;
+            }
+
+            // ********************** DELETE STUDENT DETAILS *******************
+            public bool DeleteOpportunity(int id)
+            {
+                connection();
+                SqlCommand cmd = new SqlCommand("DeleteOpportunity", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@OppId", id);
+
+                con.Open();
+                int i = cmd.ExecuteNonQuery();
+                con.Close();
+
+                if (i >= 1)
+                    return true;
+                else
+                    return false;
+            }
+        }
+    }
