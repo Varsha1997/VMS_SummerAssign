@@ -1,0 +1,113 @@
+@model IEnumerable<VMS_SummerAssign.Models.OpportunityModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<html>
+<head>
+    <style>
+        table, td, th {
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+    </style>
+    <center><h3>Opportunity Information</h3></center>
+</head>
+
+<div class="w3-container">
+    <center>
+        <div class="w3-panel w3-border w3-round-small">
+            <br />
+
+            @using (Html.BeginForm("Search2", "Search", FormMethod.Get))
+    {
+        <b>Search Option: </b>@Html.RadioButton("option", "OName")<text> Name </text>@Html.RadioButton("option", "OActivity")<text> Activity </text>
+        @Html.TextBox("search")<input type="submit" name="submit" value="Find" class="btn btn-default" />
+}
+            <br />
+            <p>
+                @Html.ActionLink("Click Here To Filter By Center", "OpportunityFilter", "Filter") |
+                @Html.ActionLink("Click Here To Filter By Date", "DateFilter", "Filter")
+            </p>
+        </div>
+    </center>
+</div>
+</head>
+
+@{
+    if (ViewBag.SearchKey != null)
+    {
+        <span>
+            Search Key: @ViewBag.SearchKey
+        </span>
+    }
+}
+
+
+<p>
+    @Html.ActionLink("Create New", "Add")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ODate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OCenter)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OPhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OSeason)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OActivity)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ODate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OCenter)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OPhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OSeason)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OActivity)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+</html>
