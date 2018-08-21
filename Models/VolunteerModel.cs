@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -44,7 +44,7 @@ namespace VMS_SummerAssign.Models
         public string VolApprovStat { get; set; }
 
         [Required(ErrorMessage = "Please state whether you have a drivers license")]
-        [Display(Name = "Driver's License")]
+        [Display(Name = "Copy of Driver's License?")]
         public string DriversLicense { get; set; }
 
         [Required(ErrorMessage = "Please state what centers you would like to work for")]
@@ -82,6 +82,8 @@ namespace VMS_SummerAssign.Models
         public String EmergContactAddress { get; set; }
 
         [Required(ErrorMessage = "Please state whether you have a social security card")]
+        [Display(Name = "Copy of Social Security?")]
+
         public String SocialSecurity { get; set; }
 
     }
