@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -28,6 +28,30 @@ namespace VMS_SummerAssign.Controllers
             return View();
         }
 
+        // Post the info
+        [HttpPost]
+        public ActionResult Add(VolunteerModel vmodel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    VolunteerDBhandle sdb = new VolunteerDBhandle();
+                    if (sdb.AddVolunteer(vmodel))
+                    {
+                        ViewBag.Message = "Volunteer Details Added Successfully";
+                        ModelState.Clear();
+                        return RedirectToAction("Index");
+                    }
+                }
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
 
         public ActionResult Register()
         {
@@ -47,7 +71,7 @@ namespace VMS_SummerAssign.Controllers
                     {
                         ViewBag.Message = "Volunteer Details Added Successfully";
                         ModelState.Clear();
-                        return RedirectToAction("Admin");
+                        return RedirectToAction("Index");
                     }
                 }
                 return View();
