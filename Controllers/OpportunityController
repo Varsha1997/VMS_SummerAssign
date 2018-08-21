@@ -1,0 +1,152 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using VMS_SummerAssign.Models;
+using System.Data;
+using System.Configuration;
+using System.Data.SqlClient;
+
+namespace VMS_SummerAssign.Controllers
+{
+    public class OpportunityController : Controller
+    {
+        // GET: Opportunity
+        public ActionResult Index()
+        {
+            OpportunityDBhandle dbhandle = new OpportunityDBhandle();
+            ModelState.Clear();
+            return View(dbhandle.GetOpportunity());
+
+        }
+
+        // Add Opportunity info
+        public ActionResult Add()
+        {
+            return View();
+        }
+
+        // Post the info
+        [HttpPost]
+        public ActionResult Add(OpportunityModel omodel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    OpportunityDBhandle sdb = new OpportunityDBhandle();
+                    if (sdb.AddOpportunity(omodel))
+                    {
+                        ViewBag.Message = "Opportunity Details Added Successfully";
+                        ModelState.Clear();
+                        return RedirectToAction("Index");
+                    }
+                }
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        // Post info
+        [HttpPost]
+        public ActionResult Register(OpportunityModel omodel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    OpportunityDBhandle sdb = new OpportunityDBhandle();
+                    if (sdb.AddOpportunity(omodel))
+                    {
+                        ViewBag.Message = "Opportunity Details Added Successfully";
+                        ModelState.Clear();
+                        return RedirectToAction("Index");
+                    }
+                }
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // Edit Volunteer info
+        public ActionResult Edit(int id)
+        {
+            OpportunityDBhandle sdb = new OpportunityDBhandle();
+            return View(sdb.GetOpportunity().Find(omodel => omodel.Id == id));
+        }
+
+        // post info
+        [HttpPost]
+        public ActionResult Edit(int id, OpportunityModel omodel)
+        {
+            try
+            {
+                OpportunityDBhandle sdb = new OpportunityDBhandle();
+                sdb.UpdateDetails(omodel);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // Delete Volunteer info
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                OpportunityDBhandle sdb = new OpportunityDBhandle();
+                if (sdb.DeleteOpportunity(id))
+                {
+                    ViewBag.AlertMsg = "Opportunity Deleted Successfully";
+                }
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: Opportunity/Details/5
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
+
+        // GET: Opportunity/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Opportunity/Create
+        [HttpPost]
+        public ActionResult Create(FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add insert logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+    }
+}
