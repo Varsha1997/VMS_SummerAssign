@@ -1,0 +1,61 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using VMS_SummerAssign.Models;
+
+namespace VMS_SummerAssign.Controllers
+{
+    public class FilterController : Controller
+    {
+        VolunteerDbContext db = new VolunteerDbContext();
+        public ActionResult VolunteerFilter(String volApprovStat)
+        {
+            ViewBag.volApprovStat = (from r in db.Volunteers select r.VolApprovStat).Distinct();
+            var model = from r in db.Volunteers
+                        orderby r.FName
+                        where r.VolApprovStat == volApprovStat || volApprovStat == null || volApprovStat == ""
+                        select r;
+            return View(model);
+        }
+
+        public ActionResult OpportunityFilter(String oCenter)
+        {
+            ViewBag.oCenter = (from r in db.Opportunities select r.OCenter).Distinct();
+            var model = from r in db.Opportunities
+                        orderby r.OName
+                        where r.OCenter == oCenter || oCenter == null || oCenter == ""
+                        select r;
+            return View(model);
+            
+        }
+
+        public ActionResult DateFilter(String sortOrder, String searchString)
+        {
+            //ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            var opportunity = from s in db.Opportunities
+                              select s;
+            //if (!String.IsNullOrEmpty(searchString))
+            //{
+            //    opportunity = opportunity.Where(s => s.OName.Contains(searchString)
+            //                           || s.OCenter.Contains(searchString));
+           // }
+            switch (sortOrder)
+            {
+                case "Date":
+                    opportunity = opportunity.OrderBy(s => s.ODate);
+                    break;
+                case "date_desc":
+                    opportunity = opportunity.OrderByDescending(s => s.ODate);
+                    break;
+                default:
+                    opportunity = opportunity.OrderBy(s => s.ODate);
+                    break;
+            }
+            return View(opportunity.ToList());
+        }
+
+    }
+}
