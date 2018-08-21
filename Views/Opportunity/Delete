@@ -1,0 +1,72 @@
+@model VMS_SummerAssign.Models.OpportunityModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OCenter)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OCenter)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OPhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OPhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OSeason)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OSeason)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OActivity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OActivity)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
